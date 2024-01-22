@@ -1,41 +1,56 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#define MAX 100001
 using namespace std;
-typedef long long ll;
-typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
 
-int n, m;
+int heap[MAX];
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+void swap(int i, int  j) {
+    int temp = heap[i];
+    heap[i] = heap[j];
+    heap[j] = temp;
+}
 
-    int T;
-    cin >> T;
-    for (int t = 1; t <= T; t++) {
-        int ans = 0;
-        cin >> n;
-        cout << "#" << t;
-        priority_queue<int> pq;
-        while (n--) {
-            int cmd;
-            cin >> cmd;
-            if (cmd == 1) {
-                int x;
-                cin >> x;
-                pq.push(x);
-            } else {
-                int ans = -1;
-                if (!pq.empty()) {
-                    ans = pq.top();
-                    pq.pop();
+int main(int argc, char** argv)
+{
+    int test_case;
+    int T, N, i, command, data, cur, size, child;
+    scanf("%d", &T);
+    for (test_case = 1; test_case <= T; ++test_case) {
+        size = 0;
+        for (i = 0; i < MAX; i++) heap[i] = 0;
+        
+        printf("#%d ", test_case);
+        scanf("%d", &N);
+        for (i = 0; i < N; i++) {
+            scanf("%d", &command);
+            if (command == 1) {
+                scanf("%d", &data);
+                cur = ++size;
+                heap[cur] = data;
+                while (cur > 1 && heap[cur] > heap[cur / 2]) {
+                    swap(cur, cur / 2);
+                    cur = cur / 2;
                 }
-                cout << " " << ans;
+            }
+            else if (command == 2) {
+                cur = 1;
+                if (!size) printf("-1 ");
+                else {
+                    printf("%d ", heap[cur]);
+                    heap[cur] = heap[size];
+                    heap[size--] = 0;
+                    
+                    while (1) {
+                        child = cur * 2;
+                        if (child+1 <= size && heap[child] < heap[child+1]) child++;
+                        if (child > size || heap[child] < heap[cur]) break;
+                        swap(cur, child);
+                        cur = child;
+                    }
+                }
             }
         }
-
-        cout << '\n';
+        printf("\n");
     }
     return 0;
 }
