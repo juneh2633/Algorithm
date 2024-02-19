@@ -1,3 +1,4 @@
+# -- 코드를 입력하세요
 
 SELECT  D.YEAR, D.MONTH, AMOUNT AS PUCHASED_USERS, ROUND( AMOUNT/(
     SELECT COUNT(user_id)
