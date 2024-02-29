@@ -23,7 +23,7 @@ struct compare {
     }
 };
 int ij[111][111];
-bool vst[111][111];
+
 int dist[111][111];
 int di[4] = {1, 0, -1, 0};
 int dj[4] = {0, 1, 0, -1};
@@ -33,14 +33,11 @@ bool in_range(int i, int j) {
     if (i < 0 || i >= n || j < 0 || j >= n) {
         return false;
     }
-    if (vst[i][j] == true) {
-        return false;
-    }
+
     return true;
 }
 
 void input() {
-    memset(vst, 0, sizeof(vst));
     memset(ij, 0, sizeof(ij));
     memset(dist, INF, sizeof(dist));
     cin >> n;
@@ -73,7 +70,6 @@ void solution() {
             }
             if (dist[ii][jj] > dist[tmp.i][tmp.j] + ij[ii][jj]) {
                 dist[ii][jj] = dist[tmp.i][tmp.j] + ij[ii][jj];
-                vst[ii][jj] = true;
 
                 pq.push({-dist[ii][jj], ii, jj});
             }
