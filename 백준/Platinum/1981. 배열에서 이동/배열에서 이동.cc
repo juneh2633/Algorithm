@@ -22,15 +22,14 @@ bool bfs(int min_num, int max_num) {
     queue<pii> q;
     vst[0][0] = 1;
     q.push({0, 0});
-    bool min_num_check = 0;
-    bool max_num_check = 0;
+    int f_min = 201;
+    int f_max = -1;
     bool finish = 0;
     while (!q.empty()) {
         pii cur = q.front();
         q.pop();
         if (cur.first == n - 1 && cur.second == n - 1) {
-            finish = 1;
-            break;
+            return true;
         }
         for (int d = 0; d < 4; d++) {
             int ii = cur.first + di[d];
@@ -41,20 +40,12 @@ bool bfs(int min_num, int max_num) {
             if (ij[ii][jj] < min_num || ij[ii][jj] > max_num) {
                 continue;
             }
-            if (ij[ii][jj] == min_num) {
-                min_num_check = 1;
-            }
-            if (ij[ii][jj] == max_num) {
-                max_num_check = 1;
-            }
+
             vst[ii][jj] = 1;
             q.push({ii, jj});
         }
     }
-    if (!finish) {
-        return false;
-    }
-    return true;
+    return false;
 }
 bool check_ans(int min_num, int max_num, int val) {
     for (int i = min_num; i <= max_num; i++) {
@@ -76,7 +67,7 @@ int parametric_search(int l, int r) {
     r = r - l;
 
     while (l <= r) {
-        int mid = (l + r) / 2;
+        int mid = r - (r - l) / 2;
         if (check_ans(min_num, max_num, mid)) {
             ans = min(ans, mid);
             r = mid - 1;
