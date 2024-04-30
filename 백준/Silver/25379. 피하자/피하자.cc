@@ -10,10 +10,10 @@ int main() {
     ll n;
     cin >> n;
     vector<ll> v(n);
-    int cntOdd = 0;
-    int alreadyInOdd = 0;
-    int cntEven = 0;
-    int alreadyInEven = 0;
+    ll cntOdd = 0;
+    ll alreadyInOdd = 0;
+    ll cntEven = 0;
+    ll alreadyInEven = 0;
     for (ll i = 0; i < n; i++) {
         cin >> v[i];
         if (v[i] % 2 == 0) {
