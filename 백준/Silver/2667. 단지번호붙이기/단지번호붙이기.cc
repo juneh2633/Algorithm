@@ -8,6 +8,7 @@ const int dj[4] = {0, 1, 0, -1};
 int n;
 int ij[25][25];
 bool isVisited[25][25];
+int cnt = 0;
 vector<int> answerList;
 
 bool isRange(int i, int j) {
@@ -20,33 +21,20 @@ bool isRange(int i, int j) {
     return true;
 }
 
-void bfs(int startI, int startJ) {
-    queue<pii> q;
-    q.push({startI, startJ});
-    isVisited[startI][startJ] = 1;
+void dfs(int curI, int curJ) {
+    cnt++;
+    isVisited[curI][curJ] = 1;
+    for (int d = 0; d < 4; d++) {
+        int targetI = curI + di[d];
+        int targetJ = curJ + dj[d];
 
-    int cnt = 1;
-    while (!q.empty()) {
-        int curI, curJ;
-        tie(curI, curJ) = q.front();
-        q.pop();
-
-        for (int d = 0; d < 4; d++) {
-            int targetI = curI + di[d];
-            int targetJ = curJ + dj[d];
-
-            if (!isRange(targetI, targetJ)) {
-                continue;
-            }
-
-            isVisited[targetI][targetJ] = 1;
-            q.push({targetI, targetJ});
-            cnt++;
+        if (!isRange(targetI, targetJ)) {
+            continue;
         }
+        dfs(targetI, targetJ);
     }
-
-    answerList.push_back(cnt);
 }
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -65,7 +53,10 @@ int main() {
             if (!isRange(i, j)) {
                 continue;
             }
-            bfs(i, j);
+
+            cnt = 0;
+            dfs(i, j);
+            answerList.push_back(cnt);
         }
     }
     sort(answerList.begin(), answerList.end());
