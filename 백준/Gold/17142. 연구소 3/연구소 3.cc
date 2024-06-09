@@ -7,7 +7,7 @@ int dj[4] = {0, 1, 0, -1};
 int n, m;
 int virusCnt;
 int ij[66][66];
-int visited[66][66][2666];
+int visited[66][66][11];
 
 struct wij {
     int w, i, j;
