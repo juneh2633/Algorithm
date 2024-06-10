@@ -42,9 +42,6 @@ bool ansCheck() {
     return false;
 }
 
-/**
- * 이동할때 위에 기물과 같이 이동 (이동 위치에 기물이 없는 경우)
- */
 void moveWithUpper_noPiece(int target, int i, int j) {
     int bottom = p[target].bottom;
     p[target].i = i;
@@ -59,7 +56,7 @@ void moveWithUpper_noPiece(int target, int i, int j) {
         return;
     }
 
-    // 다른 기물 위로 올리기
+
     while (!upper[bottom].empty()) {
         int cur = upper[bottom].back();
         p[cur].bottom = target;
@@ -74,9 +71,7 @@ void moveWithUpper_noPiece(int target, int i, int j) {
     }
 }
 
-/**
- * 이동할때 위에 기물과 같이 이동 (이동 위치에 기물이 있는 경우)
- */
+
 void moveWithUpper_Piece(int target, int newBottom, int i, int j) {
     int oldBottom = p[target].bottom;
     if (oldBottom == 0) {
@@ -133,7 +128,7 @@ int reverseUpper(int target) {
         return newBottom;
     }
 
-    // bottom이 원래 있는 경우
+
     queue<int> q;
     int newTarget = upper[curBottom].back();
     p[target].bottom = curBottom;
@@ -169,7 +164,6 @@ void move(int num) {
         }
     }
 
-    // 현재 이동 기물이 바닥인경우
     if (ij[i][j] == num) {
         ij[i][j] = 0;
     }
@@ -218,69 +212,10 @@ void input() {
     }
 }
 
-void showUpper(int a) {
-    for (auto &i : upper[a]) {
-        cout << i << " ";
-    }
-    cout << '\n';
-}
-void debug() {
-    input();
-    cout << "\n@@@@@@@\n";
-    int tmp = 1;
-    while (1) {
-        cout << "\n@@@@@@@\n";
-        int x;
-        cin >> x;
-        if (x == -10) {
-            for (int t = 1; t <= k; t++) {
-                move(t);
-            }
-            cout << tmp++ << '\n';
-        }
-        if (x == -1) {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    cout << color[i][j] << " ";
-                }
-                cout << '\n';
-            }
-            continue;
-        }
-        if (x == -2) {
-            int a;
-            cin >> a;
-            showUpper(a);
-            continue;
-        }
-        if (x > 0) {
-            move(x);
-
-            cout << "done'\n";
-            cout << p[x].i << " " << p[x].j << '\n';
-        }
-        if (x == -3) {
-            cout << "target status";
-            int t;
-            cin >> t;
-            cout << "i,j =";
-            cout << p[t].i << " " << p[t].j << '\n';
-            cout << "bottom" << p[t].bottom << '\n';
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                cout << ij[i][j] << " ";
-            }
-            cout << '\n';
-        }
-    }
-}
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    // debug();
 
     input();
 
