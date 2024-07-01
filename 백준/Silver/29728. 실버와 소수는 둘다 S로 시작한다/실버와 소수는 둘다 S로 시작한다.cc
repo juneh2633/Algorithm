@@ -7,10 +7,7 @@ bool isNotPrime[N];
 
 void primeCheck(int n) {
     for (int i = 2; i * i <= n; i++) {
-        for (int j = i; j <= n; j += i) {
-            if (j == i) {
-                continue;
-            }
+        for (int j = i * i; j <= n; j += i) {
             isNotPrime[j] = 1;
         }
     }
